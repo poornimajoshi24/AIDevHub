@@ -1,0 +1,9 @@
+/* Theme CSS variables for dynamic neon colors and Apple/Linear design tokens */
+:root {
+  --color-primary: #8b5cf6;
+  --color-primary-glow: rgba(139, 92, 246, 0.4);
+  --color-accent-cyan: #06b6d4;
+  --color-accent-emerald: #10b981;
+  --color-surface-dark: #0e121e;
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+}
