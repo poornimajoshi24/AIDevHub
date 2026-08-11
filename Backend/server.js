@@ -8,6 +8,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5001;
 
+
 // Catch Uncaught Exceptions
 process.on('uncaughtException', (err) => {
   logger.error('UNCAUGHT EXCEPTION! 💥 Shutting down...', { message: err.message, stack: err.stack });
@@ -23,10 +24,14 @@ const startServer = async () => {
     logger.warn('⚠️ MongoDB connection could not be established immediately. Starting server in fallback mode...');
   }
 
-  const server = app.listen(PORT, () => {
-    logger.info(`🚀 Server running in [${process.env.NODE_ENV || 'development'}] mode on port ${PORT}`);
-    logger.info(`🏥 Health check available at: http://localhost:${PORT}/api/v1/health`);
-  });
+const server = app.listen(PORT, "0.0.0.0", () => {
+    logger.info(
+        `🚀 Server running in [${process.env.NODE_ENV || 'development'}] mode on port ${PORT}`
+    );
+    logger.info(
+        `🏥 Health check available at: http://localhost:${PORT}/api/v1/health`
+    );
+});
 
   // Catch Unhandled Promise Rejections
   process.on('unhandledRejection', (err) => {
