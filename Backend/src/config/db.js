@@ -1,14 +1,7 @@
 import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import { logger } from './logger.js';
 
 let mongoMemoryServerInstance = null;
-
-/**
- * Connects to MongoDB using Mongoose driver
- * Automatically falls back to MongoMemoryServer in development if local daemon is absent
- */
-
 
 export const connectDB = async () => {
   const uri =
@@ -27,13 +20,13 @@ export const connectDB = async () => {
     return conn;
   } catch (error) {
 
-    // NEVER silently fall back to in-memory DB in production
+    // Never fall back to an in-memory DB in production
     if (process.env.NODE_ENV === 'production') {
       logger.error(`MongoDB connection failure: ${error.message}`);
       throw error;
     }
 
-    // Development fallback only
+    // Development-only fallback
     logger.info(
       '⚡ External MongoDB instance not detected. Starting in-memory MongoDB...'
     );
