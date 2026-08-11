@@ -8,26 +8,55 @@ let mongoMemoryServerInstance = null;
  * Connects to MongoDB using Mongoose driver
  * Automatically falls back to MongoMemoryServer in development if local daemon is absent
  */
+
+
 export const connectDB = async () => {
-  const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/aidevhub';
+  const uri =
+    process.env.MONGODB_URI ||
+    'mongodb://127.0.0.1:27017/aidevhub';
 
   try {
     const conn = await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 2000,
+      serverSelectionTimeoutMS: 10000,
     });
 
-    logger.info(`🍃 MongoDB Connected: ${conn.connection.host}/${conn.connection.name}`);
+    logger.info(
+      `🍃 MongoDB Connected: ${conn.connection.host}/${conn.connection.name}`
+    );
+
     return conn;
   } catch (error) {
-    logger.info('⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...');
+
+    // NEVER silently fall back to in-memory DB in production
+    if (process.env.NODE_ENV === 'production') {
+      logger.error(`MongoDB connection failure: ${error.message}`);
+      throw error;
+    }
+
+    // Development fallback only
+    logger.info(
+      '⚡ External MongoDB instance not detected. Starting in-memory MongoDB...'
+    );
+
     try {
+      const { MongoMemoryServer } = await import('mongodb-memory-server');
+
       mongoMemoryServerInstance = await MongoMemoryServer.create();
+
       const memoryUri = mongoMemoryServerInstance.getUri();
+
       const memoryConn = await mongoose.connect(memoryUri);
-      logger.info(`🍃 Connected to In-Memory MongoDB at: ${memoryUri}`);
+
+      logger.info(
+        `🍃 Connected to In-Memory MongoDB at: ${memoryUri}`
+      );
+
       return memoryConn;
     } catch (memErr) {
-      logger.error(`MongoDB connection failure: ${memErr.message}`);
+      logger.error(
+        `MongoDB connection failure: ${memErr.message}`
+      );
+
       throw memErr;
     }
   }
