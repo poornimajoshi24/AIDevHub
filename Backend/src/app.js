@@ -88,16 +88,22 @@ app.use(express.static(frontendDistPath));
 
 // 6. SPA Wildcard  Fallback Route (Serves React index.html for frontend pages)
 app.get('*', (req, res, next) => {
-  if (req.originalUrl.startsWith('/api') || req.originalUrl.startsWith('/api-docs')) {
-    return next(new ApiError(404, `Cannot find route '${req.originalUrl}' on this server.`));
-  }
-  res.sendFile(path.join(frontendDistPath, 'index.html'));
-});
+    if (
+        req.originalUrl.startsWith('/api') ||
+        req.originalUrl.startsWith('/api-docs')
+    ) {
+        return next(
+            new ApiError(
+                404,
+                `Cannot find route '${req.originalUrl}' on this server.`
+            )
+        );
+    }
 
+    res.sendFile(path.join(frontendDistPath, 'index.html'));
+});
 // 7. Global Error Handling Middleware (MUST be registered last)
 app.use(errorMiddleware);
 
-// Serve static files from the "public" 
-app.use(express.static("./public"))
 
 export { app };
