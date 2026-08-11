@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { PageHeader } from '../components/common/PageHeader';
 import { RepoCard } from '../components/github/RepoCard';
 import { ContributionChart } from '../components/github/ContributionChart';
@@ -8,24 +8,22 @@ import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Loader } from '../components/ui/Loader';
+import { ErrorMessage } from '../components/common/ErrorMessage';
 import { useGithub } from '../hooks/useGithub';
-import { Github, Search, Sparkles, Code, AlertTriangle, Check, Copy, Terminal, Shield } from 'lucide-react';
+import { Github, Sparkles, Code, Check, Copy, Terminal } from 'lucide-react';
 
 export const GitHubReviewer = () => {
-  const { reviewing, repoData, reviewRepo } = useGithub();
+  const { reviewing, repoData, reviewRepo, error } = useGithub();
   const [urlInput, setUrlInput] = useState('https://github.com/alexdev/next-cloud-engine');
   const [copiedId, setCopiedId] = useState(null);
 
-  useEffect(() => {
-    if (!repoData) {
-      reviewRepo('https://github.com/alexdev/next-cloud-engine');
-    }
-  }, []);
-
-  const handleAudit = (e) => {
+  const handleAudit = async (e) => {
     e?.preventDefault();
-    if (urlInput.trim()) {
-      reviewRepo(urlInput.trim());
+    if (!urlInput.trim()) return;
+    try {
+      await reviewRepo(urlInput.trim());
+    } catch {
+      // Error surfaced via useGithub().error
     }
   };
 
@@ -66,6 +64,8 @@ export const GitHubReviewer = () => {
           Analyze Repository Code
         </Button>
       </form>
+
+      {error && <ErrorMessage title="GitHub Audit Error" message={error} />}
 
       {/* Loading state */}
       {reviewing ? (

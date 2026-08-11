@@ -1,52 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageHeader } from '../components/common/PageHeader';
 import { ChatMessage } from '../components/chat/ChatMessage';
 import { ChatInput } from '../components/chat/ChatInput';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
-import { Sparkles, Trash2, Bot, Cpu } from 'lucide-react';
+import { Sparkles, Trash2, Wifi } from 'lucide-react';
+import { socketService } from '../services/socketService';
 
 export const AIChat = () => {
   const [messages, setMessages] = useState([
     {
       id: 'm1',
       role: 'assistant',
-      content: "Hello Alex! I am your AIDevHub AI Mentor. I can help you optimize your resume ATS score, review GitHub repository code quality, or architect high-scale backend microservices. What would you like to explore?",
+      content: "Hello Alex! I am your AIDevHub AI Mentor. Connected to live WebSockets. I can help you optimize your resume ATS score, review GitHub code quality, or architect backend microservices. What would you like to explore?",
       time: '10:00 AM'
-    },
-    {
-      id: 'm2',
-      role: 'user',
-      content: "How should I structure my DataGrid component in React to prevent unnecessary re-renders?",
-      time: '10:02 AM'
-    },
-    {
-      id: 'm3',
-      role: 'assistant',
-      content: "To achieve zero unnecessary re-renders in a React DataGrid:\n\n1. Wrap cell sub-renderers in `React.memo` with custom prop comparison.\n2. Memoize column configurations & callback handlers using `useMemo` & `useCallback`.\n3. Avoid passing inline object literals to cell formatters.",
-      codeLang: 'TypeScript',
-      codeSnippet: `import React, { memo, useMemo } from 'react';
-
-const DataGridCell = memo(({ value, formatter }) => {
-  return <div className="p-2 border-b border-white/10">{formatter ? formatter(value) : value}</div>;
-});
-
-export const OptimizedGrid = ({ data }) => {
-  const currencyFormatter = useMemo(() => (val) => '$' + val.toFixed(2), []);
-
-  return (
-    <div className="grid grid-cols-4">
-      {data.map((row) => (
-        <DataGridCell key={row.id} value={row.price} formatter={currencyFormatter} />
-      ))}
-    </div>
-  );
-};`,
-      time: '10:02 AM'
     }
   ]);
 
   const [loading, setLoading] = useState(false);
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
+
+  useEffect(() => {
+    // Connect to WebSockets
+    const socket = socketService.connect();
+    setIsSocketConnected(true);
+    socketService.joinRoom('global_ai_chat');
+
+    // Subscribe to AI streaming chunks
+    socketService.onStreamChunk((data) => {
+      const { chunk, fullText, isComplete } = data;
+
+      setMessages((prev) => {
+        const lastMsg = prev[prev.length - 1];
+        if (lastMsg && lastMsg.role === 'assistant' && lastMsg.isStreaming) {
+          const updated = [...prev];
+          updated[updated.length - 1] = {
+            ...lastMsg,
+            content: fullText,
+            isStreaming: !isComplete,
+          };
+          return updated;
+        } else {
+          return [
+            ...prev,
+            {
+              id: `ai_${Date.now()}`,
+              role: 'assistant',
+              content: fullText,
+              isStreaming: !isComplete,
+              time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            },
+          ];
+        }
+      });
+
+      if (isComplete) {
+        setLoading(false);
+      }
+    });
+
+    return () => {
+      socketService.disconnect();
+    };
+  }, []);
 
   const handleSend = async (userText) => {
     const userMsg = {
@@ -56,28 +72,11 @@ export const OptimizedGrid = ({ data }) => {
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
-    setMessages(prev => [...prev, userMsg]);
+    setMessages((prev) => [...prev, userMsg]);
     setLoading(true);
 
-    // Simulate AI streaming response
-    setTimeout(() => {
-      const assistantMsg = {
-        id: `m_${Date.now() + 1}`,
-        role: 'assistant',
-        content: `Analyzing your prompt: "${userText}". Here is the recommended architecture pattern:\n\nEnsure clear separation of concerns, leverage caching layers (Redis / Memory LRU), and encapsulate side-effects in custom hooks.`,
-        codeLang: 'TypeScript',
-        codeSnippet: `// Example optimized pattern
-const useFetchAuditedMetrics = (repoId: string) => {
-  const cacheKey = \`repo:\${repoId}\`;
-  return useQuery([cacheKey], () => fetchRepoMetrics(repoId), {
-    staleTime: 1000 * 60 * 5, // 5 minute cache
-  });
-};`,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-      setMessages(prev => [...prev, assistantMsg]);
-      setLoading(false);
-    }, 1200);
+    // Emit event via Socket.IO WebSocket
+    socketService.sendChatMessage('global_ai_chat', userText);
   };
 
   const handleClearChat = () => {
@@ -94,7 +93,11 @@ const useFetchAuditedMetrics = (repoId: string) => {
   return (
     <div className="flex flex-col gap-6 h-[calc(100vh-8rem)]">
       <PageHeader
-        badge={<Badge variant="purple" size="sm">Gemini 3.6 Pro Model</Badge>}
+        badge={
+          <Badge variant="purple" size="sm" className="flex items-center gap-1">
+            <Wifi className="w-3 h-3 text-emerald-400 animate-pulse" /> Live WebSockets Stream
+          </Badge>
+        }
         title="AI Developer Assistant & Career Mentor"
         subtitle="Ask questions about code refactoring, system architecture, or resume ATS optimization."
         action={
@@ -116,7 +119,7 @@ const useFetchAuditedMetrics = (repoId: string) => {
           ))}
           {loading && (
             <div className="flex items-center gap-3 text-xs text-purple-300 animate-pulse font-mono p-2">
-              <Sparkles className="w-4 h-4 text-purple-400 animate-spin" /> AIDevHub Mentor is formulating recommendations...
+              <Sparkles className="w-4 h-4 text-purple-400 animate-spin" /> Live WebSockets AI Mentor is formulating recommendations...
             </div>
           )}
         </div>

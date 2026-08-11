@@ -1,0 +1,56 @@
+name: AIDevHub CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  # 1. Continuous Integration (Automated Jest Integration Testing)
+  test:
+    name: Run Automated Test Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20 LTS Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: Backend/package-lock.json
+
+      - name: Install Backend Dependencies
+        run: |
+          cd Backend
+          npm ci
+
+      - name: Execute Integration Test Suite
+        run: |
+          cd Backend
+          npm test
+
+  # 2. Continuous Deployment (Docker Container Build Verification)
+  deploy:
+    name: Build & Verify Production Docker Image
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Production Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./Backend
+          file: ./Backend/Dockerfile
+          push: false
+          tags: aidevhub/backend:latest

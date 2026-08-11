@@ -1,64 +1,84 @@
-// Mock Authentication API Service
+import { apiRequest } from './apiClient.js';
+
+const ROLE_LABELS = {
+  developer: 'Developer',
+  senior_engineer: 'Senior Engineer',
+  staff_architect: 'Staff Architect',
+  admin: 'Admin',
+};
+
+/**
+ * Maps backend User document into the shape expected by UI components.
+ */
+export const formatUser = (user) => {
+  if (!user) return null;
+
+  return {
+    id: user._id || user.id,
+    name: user.name,
+    email: user.email,
+    avatar: user.avatar,
+    role: ROLE_LABELS[user.role] || user.role,
+    githubUsername: user.githubUsername || '',
+    joinedDate: user.createdAt
+      ? new Date(user.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+      : '',
+    tier: user.tier || 'Pro AI Architect',
+  };
+};
 
 export const authAPI = {
   login: async (email, password) => {
-    await new Promise(resolve => setTimeout(resolve, 800)); // simulate network latency
     if (!email || !password) {
       throw new Error('Please enter both email and password.');
     }
-    const user = {
-      id: 'usr_9921',
-      name: email.split('@')[0].replace('.', ' ').toUpperCase() || 'Alex Developer',
-      email: email,
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80',
-      role: 'Senior Staff Engineer',
-      githubUsername: 'alexdev',
-      joinedDate: 'Jan 2024',
-      tier: 'Pro AI Architect'
-    };
-    localStorage.setItem('aidevhub_user', JSON.stringify(user));
-    return user;
+
+    const response = await apiRequest('/api/v1/auth/login', {
+      method: 'POST',
+      body: { email, password },
+    });
+
+    return formatUser(response.data?.user);
   },
 
   signup: async (name, email, password) => {
-    await new Promise(resolve => setTimeout(resolve, 900));
-    const user = {
-      id: `usr_${Math.floor(Math.random() * 9000) + 1000}`,
-      name: name || 'New Engineer',
-      email: email,
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=250&q=80',
-      role: 'Full Stack Engineer',
-      githubUsername: email.split('@')[0],
-      joinedDate: 'Just now',
-      tier: 'Pro AI Architect'
-    };
-    localStorage.setItem('aidevhub_user', JSON.stringify(user));
-    return user;
+    if (!name || !email || !password) {
+      throw new Error('Name, email, and password are required.');
+    }
+
+    const response = await apiRequest('/api/v1/auth/register', {
+      method: 'POST',
+      body: { name, email, password },
+    });
+
+    return formatUser(response.data?.user);
   },
 
   logout: async () => {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    localStorage.removeItem('aidevhub_user');
+    try {
+      await apiRequest('/api/v1/auth/logout', { method: 'POST' });
+    } catch {
+      // Clear local session even if the cookie was already expired
+    }
   },
 
-  getCurrentUser: () => {
-    const saved = localStorage.getItem('aidevhub_user');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        return null;
-      }
+  /**
+   * Restores session from HttpOnly cookies via GET /me.
+   * Returns null when unauthenticated.
+   */
+  getCurrentUser: async () => {
+    try {
+      const response = await apiRequest('/api/v1/auth/me');
+      return formatUser(response.data?.user);
+    } catch {
+      return null;
     }
-    return {
-      id: 'usr_demo',
-      name: 'Alex Rivera',
-      email: 'alex.rivera@meta.com',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80',
-      role: 'Senior AI Systems Engineer',
-      githubUsername: 'alexrivera-dev',
-      joinedDate: 'Feb 2024',
-      tier: 'Pro AI Architect'
-    };
-  }
+  },
+
+  refreshToken: async () => {
+    const response = await apiRequest('/api/v1/auth/refresh-token', {
+      method: 'POST',
+    });
+    return response.data;
+  },
 };

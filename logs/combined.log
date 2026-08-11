@@ -1,0 +1,106 @@
+{"level":"error","message":"MongoDB connection failure: connect ECONNREFUSED 127.0.0.1:27017","timestamp":"2026-08-03 23:29:21"}
+{"level":"error","message":"MongoDB connection failure: connect ECONNREFUSED 127.0.0.1:27017","timestamp":"2026-08-03 23:29:37"}
+{"level":"warn","message":"⚠️ MongoDB connection could not be established immediately. Starting server in fallback mode...","timestamp":"2026-08-03 23:29:37"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-03 23:29:37"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-03 23:29:37"}
+{"level":"error","message":"MongoDB connection failure: connect ECONNREFUSED 127.0.0.1:27017","timestamp":"2026-08-03 23:43:01"}
+{"level":"warn","message":"⚠️ MongoDB connection could not be established immediately. Starting server in fallback mode...","timestamp":"2026-08-03 23:43:01"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-03 23:43:01"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-03 23:43:01"}
+{"errors":[],"level":"error","message":"[POST /api/v1/auth/register] - 500 Operation `users.findOne()` buffering timed out after 10000ms Operation `users.findOne()` buffering timed out after 10000ms","stack":"MongooseError: Operation `users.findOne()` buffering timed out after 10000ms\n    at Timeout._onTimeout (/Users/HP1/Desktop/AIDevHub/Backend/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:142:25)\n    at listOnTimeout (node:internal/timers:605:17)\n    at process.processTimers (node:internal/timers:541:7)","statusCode":500,"timestamp":"2026-08-03 23:43:18"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-03 23:43:29"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:64664/","timestamp":"2026-08-03 23:43:34"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-03 23:43:34"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-03 23:43:34"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-03 23:45:41"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:58678/","timestamp":"2026-08-03 23:45:42"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-03 23:45:42"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-03 23:45:42"}
+{"errors":[],"level":"error","message":"[GET /api/v1/admin/stats] - 403 Forbidden. Role 'developer' is not authorized to access this resource. Forbidden. Role 'developer' is not authorized to access this resource.","stack":"Error: Forbidden. Role 'developer' is not authorized to access this resource.\n    at file:///Users/HP1/Desktop/AIDevHub/Backend/src/middlewares/auth.middleware.js:50:9\n    at Layer.handle [as handle_request] (/Users/HP1/Desktop/AIDevHub/Backend/node_modules/express/lib/router/layer.js:95:5)\n    at next (/Users/HP1/Desktop/AIDevHub/Backend/node_modules/express/lib/router/route.js:149:13)\n    at Route.dispatch (/Users/HP1/Desktop/AIDevHub/Backend/node_modules/express/lib/router/route.js:119:3)\n    at Layer.handle [as handle_request] (/Users/HP1/Desktop/AIDevHub/Backend/node_modules/express/lib/router/layer.js:95:5)\n    at /Users/HP1/Desktop/AIDevHub/Backend/node_modules/express/lib/router/index.js:284:15\n    at router.process_params (/Users/HP1/Desktop/AIDevHub/Backend/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/HP1/Desktop/AIDevHub/Backend/node_modules/express/lib/router/index.js:280:10)\n    at file:///Users/HP1/Desktop/AIDevHub/Backend/src/middlewares/auth.middleware.js:31:5\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)","statusCode":403,"timestamp":"2026-08-03 23:45:59"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-03 23:50:03"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:58733/","timestamp":"2026-08-03 23:50:03"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-03 23:50:03"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-03 23:50:03"}
+{"level":"info","message":"☁️ [DEV STORAGE SIMULATION] File processed: https://cdn.aidevhub.io/resumes/1785781237957_resume-1785781237956-458621824.pdf","timestamp":"2026-08-03 23:50:37"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-04 19:35:49"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:52093/","timestamp":"2026-08-04 19:35:50"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-04 19:35:50"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-04 19:35:50"}
+{"level":"info","message":"📦 BullMQ [emailQueue] Producer initialized successfully.","timestamp":"2026-08-04 19:38:08"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-04 19:38:10"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:52199/","timestamp":"2026-08-04 19:38:11"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-04 19:38:11"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-04 19:38:11"}
+{"level":"info","message":"📧 [DEV EMAIL SIMULATION] To: queue.user@aidevhub.io | Subject: Welcome to AIDevHub!","timestamp":"2026-08-04 19:38:16"}
+{"level":"info","message":"Body: Hello Queue Test Lead, welcome to AIDevHub! Your AI-powered developer platform account is ready.","timestamp":"2026-08-04 19:38:16"}
+{"level":"info","message":"📬 [DEV ASYNC FALLBACK] Sent email to: queue.user@aidevhub.io","timestamp":"2026-08-04 19:38:16"}
+{"level":"info","message":"📧 [DEV EMAIL SIMULATION] To: queue.user@aidevhub.io | Subject: AIDevHub - Password Reset Request","timestamp":"2026-08-04 19:38:16"}
+{"level":"info","message":"Body: You requested a password reset. Please click this link: http://localhost:5001/reset-password/87811d4aaf5e20397417c218965384feec26ab03","timestamp":"2026-08-04 19:38:16"}
+{"level":"info","message":"📬 [DEV ASYNC FALLBACK] Sent email to: queue.user@aidevhub.io","timestamp":"2026-08-04 19:38:16"}
+{"level":"info","message":"📦 BullMQ [emailQueue] Producer initialized successfully.","timestamp":"2026-08-05 21:45:52"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-05 21:45:54"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:50635/","timestamp":"2026-08-05 21:45:54"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-05 21:45:54"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-05 21:45:54"}
+{"level":"info","message":"📦 BullMQ [emailQueue] Producer initialized successfully.","timestamp":"2026-08-11 11:45:44"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-11 11:45:46"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:49961/","timestamp":"2026-08-11 11:45:46"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-11 11:45:46"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-11 11:45:46"}
+{"level":"info","message":"📦 BullMQ [emailQueue] Producer initialized successfully.","timestamp":"2026-08-11 12:38:44"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-11 12:38:46"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:52708/","timestamp":"2026-08-11 12:38:46"}
+{"level":"info","message":"📦 BullMQ [emailQueue] Producer initialized successfully.","timestamp":"2026-08-11 12:38:54"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-11 12:38:56"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:52726/","timestamp":"2026-08-11 12:38:57"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-11 12:38:57"}
+{"level":"info","message":"⚡ WebSockets (Socket.IO) active on: ws://localhost:5001","timestamp":"2026-08-11 12:38:57"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-11 12:38:57"}
+{"level":"info","message":"📖 Interactive API Docs available at: http://localhost:5001/api-docs","timestamp":"2026-08-11 12:38:57"}
+{"level":"info","message":"📦 BullMQ [emailQueue] Producer initialized successfully.","timestamp":"2026-08-11 12:40:47"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-11 12:40:49"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:52824/","timestamp":"2026-08-11 12:40:49"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-11 12:40:49"}
+{"level":"info","message":"⚡ WebSockets (Socket.IO) active on: ws://localhost:5001","timestamp":"2026-08-11 12:40:49"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-11 12:40:49"}
+{"level":"info","message":"📖 Interactive API Docs available at: http://localhost:5001/api-docs","timestamp":"2026-08-11 12:40:49"}
+{"level":"info","message":"📧 [DEV EMAIL SIMULATION] To: alex.integration@aidevhub.io | Subject: Welcome to AIDevHub!","timestamp":"2026-08-11 12:41:00"}
+{"level":"info","message":"Body: Hello Alex Integration, welcome to AIDevHub! Your AI-powered developer platform account is ready.","timestamp":"2026-08-11 12:41:00"}
+{"level":"info","message":"📬 [DEV ASYNC FALLBACK] Sent email to: alex.integration@aidevhub.io","timestamp":"2026-08-11 12:41:00"}
+{"level":"info","message":"☁️ [DEV STORAGE SIMULATION] File processed: https://cdn.aidevhub.io/resumes/1786432260773_resume-1786432260772-357895582.pdf","timestamp":"2026-08-11 12:41:00"}
+{"level":"info","message":"📦 BullMQ [emailQueue] Producer initialized successfully.","timestamp":"2026-08-11 12:43:12"}
+{"level":"info","message":"👷 BullMQ [emailWorker] Consumer initialized and listening for jobs.","timestamp":"2026-08-11 12:43:12"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-11 12:43:14"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:53154/","timestamp":"2026-08-11 12:43:14"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-11 12:43:14"}
+{"level":"info","message":"⚡ WebSockets (Socket.IO) active on: ws://localhost:5001","timestamp":"2026-08-11 12:43:14"}
+{"level":"info","message":"📦 BullMQ Email Background Worker listening in background.","timestamp":"2026-08-11 12:43:14"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-11 12:43:14"}
+{"level":"info","message":"📖 Interactive API Docs available at: http://localhost:5001/api-docs","timestamp":"2026-08-11 12:43:14"}
+{"level":"info","message":"📦 BullMQ [emailQueue] Producer initialized successfully.","timestamp":"2026-08-11 12:45:24"}
+{"level":"info","message":"👷 BullMQ [emailWorker] Consumer initialized and listening for jobs.","timestamp":"2026-08-11 12:45:24"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-11 12:45:26"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:53258/","timestamp":"2026-08-11 12:45:26"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-11 12:45:26"}
+{"level":"info","message":"⚡ WebSockets (Socket.IO) active on: ws://localhost:5001","timestamp":"2026-08-11 12:45:26"}
+{"level":"info","message":"📦 BullMQ Email Background Worker listening in background.","timestamp":"2026-08-11 12:45:26"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-11 12:45:26"}
+{"level":"info","message":"📖 Interactive API Docs available at: http://localhost:5001/api-docs","timestamp":"2026-08-11 12:45:26"}
+{"level":"info","message":"📦 BullMQ [emailQueue] Producer initialized successfully.","timestamp":"2026-08-11 12:46:52"}
+{"level":"info","message":"👷 BullMQ [emailWorker] Consumer initialized and listening for jobs.","timestamp":"2026-08-11 12:46:53"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-11 12:46:55"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:53449/","timestamp":"2026-08-11 12:46:55"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-11 12:46:55"}
+{"level":"info","message":"⚡ WebSockets (Socket.IO) active on: ws://localhost:5001","timestamp":"2026-08-11 12:46:55"}
+{"level":"info","message":"📦 BullMQ Email Background Worker listening in background.","timestamp":"2026-08-11 12:46:55"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-11 12:46:55"}
+{"level":"info","message":"📖 Interactive API Docs available at: http://localhost:5001/api-docs","timestamp":"2026-08-11 12:46:55"}
+{"level":"info","message":"📦 BullMQ [emailQueue] Producer initialized successfully.","timestamp":"2026-08-11 12:47:39"}
+{"level":"info","message":"👷 BullMQ [emailWorker] Consumer initialized and listening for jobs.","timestamp":"2026-08-11 12:47:39"}
+{"level":"info","message":"⚡ External MongoDB instance not detected. Starting in-memory MongoDB instance...","timestamp":"2026-08-11 12:47:41"}
+{"level":"info","message":"🍃 Connected to In-Memory MongoDB at: mongodb://127.0.0.1:53502/","timestamp":"2026-08-11 12:47:41"}
+{"level":"info","message":"🚀 Server running in [development] mode on port 5001","timestamp":"2026-08-11 12:47:41"}
+{"level":"info","message":"⚡ WebSockets (Socket.IO) active on: ws://localhost:5001","timestamp":"2026-08-11 12:47:41"}
+{"level":"info","message":"📦 BullMQ Email Background Worker listening in background.","timestamp":"2026-08-11 12:47:41"}
+{"level":"info","message":"🏥 Health check available at: http://localhost:5001/api/v1/health","timestamp":"2026-08-11 12:47:41"}
+{"level":"info","message":"📖 Interactive API Docs available at: http://localhost:5001/api-docs","timestamp":"2026-08-11 12:47:41"}

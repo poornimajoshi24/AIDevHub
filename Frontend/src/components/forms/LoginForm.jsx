@@ -9,8 +9,8 @@ import { Mail, Lock, LogIn, Github, ArrowRight } from 'lucide-react';
 export const LoginForm = ({ onSwitchToSignup }) => {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('alex.rivera@meta.com');
-  const [password, setPassword] = useState('••••••••••••');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -88,8 +88,7 @@ export const LoginForm = ({ onSwitchToSignup }) => {
         size="md"
         icon={Github}
         onClick={() => {
-          login('github.user@dev.io', 'pass');
-          navigate('/dashboard');
+          setError('GitHub OAuth is not connected yet. Please sign in with email and password.');
         }}
         className="w-full"
       >

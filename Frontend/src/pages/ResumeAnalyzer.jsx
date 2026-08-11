@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import confetti from 'canvas-confetti';
 import { PageHeader } from '../components/common/PageHeader';
 import { ResumeUpload } from '../components/forms/ResumeUpload';
@@ -9,27 +9,25 @@ import { SkillGap } from '../components/resume/SkillGap';
 import { Loader } from '../components/ui/Loader';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
+import { ErrorMessage } from '../components/common/ErrorMessage';
 import { useResume } from '../hooks/useResume';
-import { FileText, Sparkles, Download, RefreshCw, CheckCircle2 } from 'lucide-react';
+import { Download } from 'lucide-react';
 
 export const ResumeAnalyzer = () => {
-  const { analyzing, resumeData, analyzeFile } = useResume();
-
-  useEffect(() => {
-    // Automatically analyze default resume on mount if empty
-    if (!resumeData) {
-      analyzeFile(null);
-    }
-  }, []);
+  const { analyzing, resumeData, analyzeFile, error } = useResume();
 
   const handleUpload = async (file) => {
-    const data = await analyzeFile(file);
-    if (data?.overallScore > 85) {
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
+    try {
+      const data = await analyzeFile(file);
+      if (data?.overallScore > 85) {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+    } catch {
+      // Error surfaced via useResume().error
     }
   };
 
@@ -60,6 +58,8 @@ export const ResumeAnalyzer = () => {
 
       {/* Upload Zone */}
       <ResumeUpload onUpload={handleUpload} loading={analyzing} />
+
+      {error && <ErrorMessage title="Resume Analysis Error" message={error} />}
 
       {/* Loading Overlay state */}
       {analyzing ? (

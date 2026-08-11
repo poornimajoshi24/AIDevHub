@@ -8,9 +8,30 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const activeUser = authAPI.getCurrentUser();
-    setUser(activeUser);
-    setLoading(false);
+    let cancelled = false;
+
+    const restoreSession = async () => {
+      try {
+        const activeUser = await authAPI.getCurrentUser();
+        if (!cancelled) {
+          setUser(activeUser);
+        }
+      } catch {
+        if (!cancelled) {
+          setUser(null);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    restoreSession();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const login = async (email, password) => {
